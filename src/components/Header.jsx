@@ -1,11 +1,14 @@
+import {TbBusinessplan} from 'react-icons/tb'
+
 const Header = () => {
   return (
-    <header className="relative w-full flex flex-wrap items-center justify-between py-5 bg-white
-    text-gray-500 hover:text-gray-700 focus:text-gray-700 shadow-lg">
+    <header className="w-full flex flex-wrap items-center justify-between py-5 bg-white
+    text-gray-500 hover:text-gray-700 focus:text-gray-700 shadow-lg fixed top-0 left-0 right-0">
       <div className="container-fluid w-full flex flex-wrap items-center justify-between px-6">
         <div className="container-fluid">
-          <a className="text-xl text-black" href="#">
-            Genesis
+          <a className="flex justify-start items-center text-xl text-black" href="#">
+            <TbBusinessplan />
+            <span>Genesis</span>
           </a>
         </div>
         <div className="flex space-x-2 justify-center">

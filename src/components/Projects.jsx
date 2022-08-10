@@ -4,12 +4,11 @@ import { FaEthereum } from 'react-icons/fa'
 const Projects = () => {
   return (
     <div className="flex justify-center items-center flex-wrap">
-      <Project />
-      <Project />
-      <Project />
-      <Project />
-      <Project />
-      <Project />
+      {Array(10)
+        .fill()
+        .map((item, i) => (
+          <Project key={i} />
+        ))}
     </div>
   )
 }
@@ -30,9 +29,13 @@ const Project = () => (
         </h5>
         <small className="text-gray-500">2 days left</small>
       </div>
-      <div className='flex justify-start items-center space-x-2 mb-3'>
-          <Identicon className="rounded-full shadow-md" string={'account'} size={15} />
-          <small className="text-gray-700">0xf1...ed5</small>
+      <div className="flex justify-start items-center space-x-2 mb-3">
+        <Identicon
+          className="rounded-full shadow-md"
+          string={'account'}
+          size={15}
+        />
+        <small className="text-gray-700">0xf1...ed5</small>
       </div>
       <div className="w-full bg-gray-300 rounded-full">
         <div
@@ -48,12 +51,32 @@ const Project = () => (
         <small className="text-green-700">5.3 ETH Raised</small>
       </div>
       <div className="flex justify-between items-center mt-4 mb-2">
-        <div className='flex justify-start items-center space-x-2'>
-          <Identicon className="rounded-full shadow-md" string={'Testing' + 1} size={25} />
-          <Identicon className="rounded-full shadow-md" string={'Testing' + 2} size={25} />
-          <Identicon className="rounded-full shadow-md" string={'Testing' + 3} size={25} />
-          <Identicon className="rounded-full shadow-md" string={'Testing' + 4} size={25} />
-          <Identicon className="rounded-full shadow-md" string={'Testing' + 5} size={25} />
+        <div className="flex justify-start items-center space-x-2">
+          <Identicon
+            className="rounded-full shadow-md"
+            string={'Testing' + 1}
+            size={25}
+          />
+          <Identicon
+            className="rounded-full shadow-md"
+            string={'Testing' + 2}
+            size={25}
+          />
+          <Identicon
+            className="rounded-full shadow-md"
+            string={'Testing' + 3}
+            size={25}
+          />
+          <Identicon
+            className="rounded-full shadow-md"
+            string={'Testing' + 4}
+            size={25}
+          />
+          <Identicon
+            className="rounded-full shadow-md"
+            string={'Testing' + 5}
+            size={25}
+          />
         </div>
         <small className="text-gray-500">+58 Backers</small>
       </div>
