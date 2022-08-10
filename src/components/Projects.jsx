@@ -1,4 +1,5 @@
 import Identicon from 'react-identicons'
+import { Link } from 'react-router-dom'
 import { FaEthereum } from 'react-icons/fa'
 
 const Projects = () => {
@@ -7,21 +8,25 @@ const Projects = () => {
       {Array(10)
         .fill()
         .map((item, i) => (
-          <Project key={i} />
+          <Project id={i} key={i} />
         ))}
     </div>
   )
 }
 
-const Project = () => (
+const Project = ({ id }) => (
   <div className="rounded-lg shadow-lg bg-white max-w-xs m-4">
-    <a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">
+    <Link
+      to={`/products/${id}`}
+      data-mdb-ripple="true"
+      data-mdb-ripple-color="light"
+    >
       <img
         className="rounded-2xl"
         src="https://mdbootstrap.com/img/new/standard/nature/182.jpg"
         alt=""
       />
-    </a>
+    </Link>
     <div className="p-4">
       <div className="flex justify-between items-center">
         <h5 className="text-gray-900 text-sm font-medium mb-2">
