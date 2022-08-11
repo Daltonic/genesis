@@ -17,7 +17,7 @@ const Projects = () => {
 const Project = ({ id }) => (
   <div className="rounded-lg shadow-lg bg-white max-w-xs m-4">
     <Link
-      to={`/products/${id}`}
+      to={`/projects/${id}`}
       data-mdb-ripple="true"
       data-mdb-ripple-color="light"
     >
@@ -83,7 +83,7 @@ const Project = ({ id }) => (
             size={25}
           />
         </div>
-        <small className="text-gray-500">+58 Backers</small>
+        <small className="text-gray-500 font-bold">+58 Backers</small>
       </div>
     </div>
   </div>

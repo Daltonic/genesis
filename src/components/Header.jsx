@@ -4,10 +4,10 @@ import { TbBusinessplan } from 'react-icons/tb'
 const Header = () => {
   return (
     <header
-      className="w-full flex flex-wrap items-center justify-between py-5 bg-white
+      className="w-full flex flex-wrap items-center justify-between p-5 bg-white
     text-gray-500 hover:text-gray-700 focus:text-gray-700 shadow-lg fixed top-0 left-0 right-0"
     >
-      <div className="container-fluid w-full flex flex-wrap items-center justify-between px-6">
+      <div className="container-fluid w-full flex flex-wrap items-center justify-between">
         <div className="container-fluid">
           <Link
             to="/"
