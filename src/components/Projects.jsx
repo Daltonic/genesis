@@ -49,11 +49,11 @@ const Project = ({ id }) => (
         ></div>
       </div>
       <div className="flex justify-between items-center font-bold mt-1 mb-2">
+        <small className="text-green-700">5.3 ETH Raised</small>
         <small className="flex justify-start items-center">
           <FaEthereum />
           <span className="text-gray-700">7.8 EHT</span>
         </small>
-        <small className="text-green-700">5.3 ETH Raised</small>
       </div>
       <div className="flex justify-between items-center mt-4 mb-2">
         <div className="flex justify-start items-center space-x-2">
