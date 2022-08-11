@@ -1,9 +1,10 @@
 import Identicon from 'react-identicons'
 import { FaEthereum } from 'react-icons/fa'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Project = () => {
   return (
-    <div className="flex justify-center items-center flex-col flex-wrap p-6 sm:w-2/3 mx-auto">
+    <div className="flex justify-center items-center flex-col flex-wrap p-6 sm:w-2/3 w-full mx-auto">
       <Details />
       <div className="my-5"></div>
       <Backers />
@@ -12,8 +13,11 @@ const Project = () => {
 }
 
 const Details = () => {
+  const navigate = useNavigate()
+  const { id } = useParams()
+
   return (
-    <div className='flex justify-center items-center flex-col'>
+    <div className="flex justify-center items-center flex-col">
       <div className="flex justify-start items-start sm:space-x-3 flex-wrap">
         <img
           className="rounded-2xl sm:w-1/3 w-full"
@@ -82,6 +86,7 @@ const Details = () => {
             leading-tight uppercase shadow-md hover:bg-green-700 hover:shadow-lg hover:text-white
             focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 w-full border
             active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+          onClick={() => navigate(`/chats/` + id)}
         >
           Chat
         </button>

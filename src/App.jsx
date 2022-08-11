@@ -4,6 +4,7 @@ import AddButton from './components/AddButton'
 import CreateProject from './components/CreateProject'
 import Home from './views/Home'
 import Project from './views/Project'
+import Chat from './views/Chat'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects/:id" element={<Project />} />
+        <Route path="/chats/:id" element={<Chat />} />
       </Routes>
       <AddButton />
       <CreateProject />
