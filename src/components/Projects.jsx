@@ -15,7 +15,7 @@ const Projects = () => {
 }
 
 const Project = ({ id }) => (
-  <div className="rounded-lg shadow-lg bg-white max-w-xs m-4">
+  <div id='projects' className="rounded-lg shadow-lg bg-white max-w-xs m-4">
     <Link
       to={`/projects/${id}`}
       data-mdb-ripple="true"
