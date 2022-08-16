@@ -148,7 +148,7 @@ const Chat = () => {
           </div>
         </div>
       </div>
-      <form className="flex flex-row w-full">
+      <form className="flex w-full">
         <input
           className="w-full bg-transparent rounded-lg p-4 
           focus:ring-0 focus:outline-none border-gray-500"
