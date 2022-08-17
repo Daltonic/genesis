@@ -1,9 +1,10 @@
 import abi from './abis/src/contracts/Genesis.sol/Genesis.json'
+import address from './abis/contractAddress.json'
 import { setGlobalState } from './store'
 import { ethers } from 'ethers'
 
 const { ethereum } = window
-const contractAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
+const contractAddress = address.address
 const contractAbi = abi.abi
 
 const getEtheriumContract = () => {
