@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { create } from 'ipfs-http-client'
 import { setGlobalState, useGlobalState } from '../store'
+import { createProject } from '../Genesis'
 
 const client = create('https://ipfs.infura.io:5001/api/v0')
 
@@ -13,6 +14,12 @@ const CreateProject = () => {
   const [description, setDescription] = useState('')
   const [fileUrl, setFileUrl] = useState('')
   const [imgBase64, setImgBase64] = useState(null)
+
+  const onCreateProject = () => {
+    createProject({ title, description, cost, date, imageURL: fileUrl })
+      .then(() => console.log('Project Created!'))
+      .catch((error) => console.log(error))
+  }
 
   const onChange = async (e) => {
     const reader = new FileReader()

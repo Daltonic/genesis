@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { TbBusinessplan } from 'react-icons/tb'
 import { connectWallet } from '../Genesis'
-import { useGlobalState } from '../store'
+import { useGlobalState, truncate } from '../store'
 
 const Header = () => {
   const [connectedAccount] = useGlobalState('connectedAccount')
@@ -32,7 +32,7 @@ const Header = () => {
               focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0
               active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
             >
-              {connectedAccount}
+              {truncate(connectedAccount, 4, 4, 11)}
             </button>
           ) : (
             <button

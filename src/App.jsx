@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { getAllProjects, isWallectConnected } from './Genesis'
 import Header from './components/Header'
 import AddButton from './components/AddButton'
 import CreateProject from './components/CreateProject'
@@ -7,6 +9,11 @@ import Project from './views/Project'
 import Chat from './views/Chat'
 
 const App = () => {
+  useEffect(() => {
+    isWallectConnected().then(() => {
+      getAllProjects().then(() => console.log('Project Loaded!'))
+    })
+  }, [])
   return (
     <div className="min-h-screen relative">
       <Header />
