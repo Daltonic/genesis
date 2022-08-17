@@ -99,6 +99,7 @@ const structuredProjects = (projects) => (
       timestamp: new Date(project.timestamp.toNumber() * 1000).toLocaleString(),
       expiresAt: new Date(project.expiresAt.toNumber() * 1000).toLocaleString(),
       imageURL: project.imageURL,
+      raised: parseInt(project.raised._hex) / 10 ** 18,
       cost: parseInt(project.cost._hex) / 10 ** 18,
     }))
     .reverse()

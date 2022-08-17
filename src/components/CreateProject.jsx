@@ -32,6 +32,7 @@ const CreateProject = () => {
       .then(() => {
         setGlobalState('modal', 'scale-0')
         console.log('Project Created!')
+        resetForm()
       })
       .catch((error) => console.log(error))
   }
@@ -42,8 +43,9 @@ const CreateProject = () => {
   }
 
   const resetForm = () => {
-    setFileUrl('')
+    setImageURL('')
     setTitle('')
+    setDate('')
     setCost('')
     setDescription('')
   }
