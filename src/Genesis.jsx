@@ -51,49 +51,48 @@ const connectWallet = async () => {
 const createProject = async ({ title, description, imageURL, cost }) => {
   try {
     if (!ethereum) return alert('Please install Metamask')
-    const connectedAccount = getGlobalState('connectedAccount')
-    const contract = getGlobalState('contract')
+    
+    const contract = getEtheriumContract()
     cost = ethers.utils.parseEther(cost)
-
-    await ethereum.request({
-      method: 'eth_sendTransaction',
-      params: [
-        {
-          from: connectedAccount,
-          gas: '0x5208',
-        },
-      ],
-    })
-
     await contract.createProject(title, description, imageURL, cost)
 
     const projects = await contract.getProjects()
-    // setGlobalState('projects', structuredProjects(projects))
-    console.log(projects)
+    setGlobalState('projects', structuredProjects(projects))
   } catch (error) {
     console.log(error)
     throw new Error('No ethereum object.')
   }
 }
 
-const getAllProjects = async () => {
+const loadBlockchain = async () => {
   try {
     if (!ethereum) return alert('Please install Metamask')
+    
+    window.ethereum.on('chainChanged', (chainId) => {
+      window.location.reload();
+    })
+
+    window.ethereum.on('accountsChanged', async () => {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      setGlobalState('connectedAccount', accounts[0])
+      await loadBlockchain()
+    })
+
     const contract = getEtheriumContract()
     const projects = await contract.getProjects()
 
-    // setGlobalState('projects', projects)
-    console.log(projects)
+    setGlobalState('projects', structuredProjects(projects))
+    console.log(structuredProjects(projects))
   } catch (error) {
     console.log(error)
     throw new Error('No ethereum object.')
   }
 }
 
-const structuredProjects = (projects) => {
+const structuredProjects = (projects) => (
   projects
     .map((project) => ({
-      id: project.id,
+      id: project.id.toNumber(),
       owner: project.owner,
       title: project.title,
       description: project.description,
@@ -103,12 +102,12 @@ const structuredProjects = (projects) => {
       cost: parseInt(project.cost._hex) / 10 ** 18,
     }))
     .reverse()
-}
+)
 
 export {
   getEtheriumContract,
   isWallectConnected,
   connectWallet,
   createProject,
-  getAllProjects,
+  loadBlockchain,
 }
