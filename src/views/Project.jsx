@@ -1,9 +1,15 @@
 import Identicon from 'react-identicons'
 import { FaEthereum } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
-import { daysRemaining, truncate, useGlobalState } from '../store'
+import {
+  daysRemaining,
+  setGlobalState,
+  truncate,
+  useGlobalState,
+} from '../store'
 import { useEffect, useState } from 'react'
 import { loadProject } from '../Genesis'
+import UpdateProject from '../components/UpdateProject'
 
 const Project = () => {
   const { id } = useParams()
@@ -20,6 +26,7 @@ const Project = () => {
       <Details id={id} project={project} />
       <div className="my-5"></div>
       <Backers />
+      <UpdateProject project={project} />
     </div>
   ) : null
 }
@@ -29,7 +36,7 @@ const Details = ({ id, project }) => {
 
   return (
     <div className="flex justify-center items-center flex-col">
-      <div className="flex justify-start items-start sm:space-x-3 flex-wrap">
+      <div className="flex justify-start items-start sm:space-x-4 flex-wrap">
         <img
           className="rounded-xl h-64 object-cover sm:w-1/3 w-full"
           src={project.imageURL}
@@ -90,6 +97,18 @@ const Details = ({ id, project }) => {
               active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
             >
               Back Project
+            </button>
+            <button
+              type="button"
+              data-mdb-ripple="true"
+              data-mdb-ripple-color="light"
+              className="inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs 
+              leading-tight uppercase rounded-full shadow-md hover:bg-gray-700 hover:shadow-lg
+              focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out"
+              onClick={() => setGlobalState('updateModal', 'scale-100')}
+            >
+              Edit
             </button>
             <button
               type="button"

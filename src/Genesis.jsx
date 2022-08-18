@@ -82,6 +82,29 @@ const createProject = async ({
   }
 }
 
+const updateProject = async ({
+  id,
+  title,
+  description,
+  imageURL,
+  expiresAt,
+}) => {
+  try {
+    if (!ethereum) return alert('Please install Metamask')
+
+    const contract = getEtheriumContract()
+    await contract.updateProject(id, title, description, imageURL, expiresAt)
+
+    let project = await contract.getProject(id)
+    project = structuredProjects([project])[0]
+
+    setGlobalState('project', project)
+  } catch (error) {
+    console.log(error)
+    throw new Error('No ethereum object.')
+  }
+}
+
 const loadProject = async (id) => {
   try {
     if (!ethereum) return alert('Please install Metamask')
@@ -139,6 +162,7 @@ export {
   isWallectConnected,
   connectWallet,
   createProject,
+  updateProject,
   loadProjects,
   loadProject,
 }
