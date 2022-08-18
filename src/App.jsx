@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { loadBlockchain, isWallectConnected } from './Genesis'
+import { isWallectConnected } from './Genesis'
 import Header from './components/Header'
 import AddButton from './components/AddButton'
 import CreateProject from './components/CreateProject'
@@ -9,20 +9,25 @@ import Project from './views/Project'
 import Chat from './views/Chat'
 
 const App = () => {
+  const [loaded, setLoaded] = useState(false)
   useEffect(() => {
     isWallectConnected().then(() => {
-      loadBlockchain().then(() => console.log('Blockchain Loaded!'))
+      console.log('Blockchain Loaded')
+      setLoaded(true)
     })
   }, [])
+
   return (
     <div className="min-h-screen relative">
       <Header />
       <div className="mt-20"></div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/projects/:id" element={<Project />} />
-        <Route path="/chats/:id" element={<Chat />} />
-      </Routes>
+      {loaded ? (
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects/:id" element={<Project />} />
+          <Route path="/chats/:id" element={<Chat />} />
+        </Routes>
+      ) : null}
       <AddButton />
       <CreateProject />
     </div>

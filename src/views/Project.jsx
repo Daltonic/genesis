@@ -1,26 +1,35 @@
 import Identicon from 'react-identicons'
 import { FaEthereum } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useGlobalState } from '../store'
+import { useEffect } from 'react'
+import { loadProject } from '../Genesis'
 
 const Project = () => {
+  const { id } = useParams()
+  const [project] = useGlobalState('project')
+
+  useEffect(() => {
+    loadProject(id).then(() => console.log('Project Loaded!'))
+  }, [])
+
   return (
     <div className="flex justify-center items-center flex-col flex-wrap p-6 sm:w-2/3 w-full mx-auto">
-      <Details />
+      <Details id={id} />
       <div className="my-5"></div>
       <Backers />
     </div>
   )
 }
 
-const Details = () => {
+const Details = ({ id }) => {
   const navigate = useNavigate()
-  const { id } = useParams()
 
   return (
     <div className="flex justify-center items-center flex-col">
       <div className="flex justify-start items-start sm:space-x-3 flex-wrap">
         <img
-          className="rounded-2xl sm:w-1/3 w-full"
+          className="rounded-xl h-64 object-cover sm:w-1/3 w-full"
           src="https://mdbootstrap.com/img/new/standard/nature/182.jpg"
           alt=""
         />

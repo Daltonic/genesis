@@ -24,7 +24,7 @@ const CreateProject = () => {
       title,
       description,
       cost,
-      date: toTimestamp(date),
+      expiresAt: toTimestamp(date),
       imageURL,
     }
 

@@ -1,6 +1,8 @@
-import { setGlobalState } from '../store'
+import { setGlobalState, useGlobalState } from '../store'
 
 const Hero = () => {
+  const [stats] = useGlobalState('stats')
+
   const scrollToProjects = () => {
     document.getElementById('projects').scrollIntoView()
   }
@@ -38,19 +40,19 @@ const Hero = () => {
       <div className="flex justify-center items-center mt-10">
         <div className="flex flex-col justify-center items-center h-20 border border-gray-200 shadow-md w-full">
           <span className="text-lg font-bold text-green-900 leading-5">
-            225,029
+            {stats.totalProjects}
           </span>
           <span>Projects</span>
         </div>
         <div className="flex flex-col justify-center items-center h-20 border border-gray-200 shadow-md w-full">
           <span className="text-lg font-bold text-green-900 leading-5">
-            6,198
+            {stats.totalBacking}
           </span>
           <span>Backing</span>
         </div>
         <div className="flex flex-col justify-center items-center h-20 border border-gray-200 shadow-md w-full">
           <span className="text-lg font-bold text-green-900 leading-5">
-            14,102 ETH
+            {stats.totalDonations} ETH
           </span>
           <span>Donated</span>
         </div>

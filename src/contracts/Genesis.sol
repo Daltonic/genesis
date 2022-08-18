@@ -5,8 +5,8 @@ contract Genesis {
     address public owner;
     uint public projectTax;
     uint public projectCount;
-    uint public BACKING_PERIOD = 7 days;
     uint public balance;
+    statsStruct public stats;
     projectStruct[] projects;
 
     mapping(address => projectStruct[]) projectsOf;
@@ -19,6 +19,12 @@ contract Genesis {
         REVERTED,
         DELETED,
         REFUNDED
+    }
+
+    struct statsStruct {
+        uint totalProjects;
+        uint totalBacking;
+        uint totalDonations;
     }
 
     struct accStruct {
@@ -36,6 +42,7 @@ contract Genesis {
         uint raised;
         uint timestamp;
         uint expiresAt;
+        uint backers;
         statusEnum status;
     }
 
@@ -60,7 +67,8 @@ contract Genesis {
         string memory title,
         string memory description,
         string memory imageURL,
-        uint cost
+        uint cost,
+        uint expiresAt
     ) public returns (bool) {
         require(bytes(title).length > 0, "Title cannot be empty");
         require(bytes(description).length > 0, "Description cannot be empty");
@@ -74,11 +82,12 @@ contract Genesis {
         project.imageURL = imageURL;
         project.cost = cost;
         project.timestamp = block.timestamp;
-        project.expiresAt = block.timestamp + BACKING_PERIOD;
+        project.expiresAt = expiresAt;
 
         projects.push(project);
         projectExist[projectCount] = true;
         projectsOf[msg.sender].push(project);
+        stats.totalProjects += 1;
 
         emit Action (
             projectCount++,
@@ -93,7 +102,8 @@ contract Genesis {
         uint id,
         string memory title,
         string memory description,
-        string memory imageURL
+        string memory imageURL,
+        uint expiresAt
     ) public returns (bool) {
         require(msg.sender == projects[id].owner, "Unauthorized Entity");
         require(projectExist[id], "Project not found");
@@ -104,6 +114,7 @@ contract Genesis {
         projects[id].title = title;
         projects[id].description = description;
         projects[id].imageURL = imageURL;
+        projects[id].expiresAt = expiresAt;
 
         emit Action (
             id,
@@ -179,7 +190,10 @@ contract Genesis {
 
         balance += msg.value;
         projects[id].raised += msg.value;
+        projects[id].backers += 1;
         backersOf[id].push(accStruct(msg.sender, msg.value));
+        stats.totalBacking += 1;
+        stats.totalDonations += msg.value;
 
         emit Action (
             id,
@@ -205,10 +219,6 @@ contract Genesis {
 
     function changeTax(uint _taxPct) public ownerOnly {
         projectTax = _taxPct;
-    }
-    
-    function changePeriod(uint _days) public ownerOnly {
-        BACKING_PERIOD = _days * 1 days;
     }
 
     function getProject(uint id) public view returns (projectStruct memory) {
