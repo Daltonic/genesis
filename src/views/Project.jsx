@@ -33,7 +33,7 @@ const Project = () => {
 
 const Details = ({ id, project }) => {
   const navigate = useNavigate()
-
+  const [connectedAccount] = useGlobalState('connectedAccount')
   return (
     <div className="flex justify-center items-center flex-col">
       <div className="flex justify-start items-start sm:space-x-4 flex-wrap">
@@ -96,20 +96,22 @@ const Details = ({ id, project }) => {
               focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0
               active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
             >
-              Back Project
+              Back This Project
             </button>
-            <button
-              type="button"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="light"
-              className="inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs 
-              leading-tight uppercase rounded-full shadow-md hover:bg-gray-700 hover:shadow-lg
-              focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out"
-              onClick={() => setGlobalState('updateModal', 'scale-100')}
-            >
-              Edit
-            </button>
+            {connectedAccount.toLowerCase() == project.owner.toLowerCase() ? (
+              <button
+                type="button"
+                data-mdb-ripple="true"
+                data-mdb-ripple-color="light"
+                className="inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs 
+                leading-tight uppercase rounded-full shadow-md hover:bg-gray-700 hover:shadow-lg
+                focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0
+                active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out"
+                onClick={() => setGlobalState('updateModal', 'scale-100')}
+              >
+                Edit
+              </button>
+            ) : null}
             <button
               type="button"
               data-mdb-ripple="true"

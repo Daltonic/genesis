@@ -41,8 +41,7 @@ const isWallectConnected = async () => {
       console.log('No accounts found.')
     }
   } catch (error) {
-    console.log(error)
-    throw new Error('No ethereum object.')
+    reportError(error)
   }
 }
 
@@ -52,8 +51,7 @@ const connectWallet = async () => {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
     setGlobalState('connectedAccount', accounts[0])
   } catch (error) {
-    console.log(error)
-    throw new Error('No ethereum object.')
+    reportError(error)
   }
 }
 
@@ -77,8 +75,7 @@ const createProject = async ({
     setGlobalState('stats', structureStats(stats))
     setGlobalState('projects', structuredProjects(projects))
   } catch (error) {
-    console.log(error)
-    throw new Error('No ethereum object.')
+    reportError(error)
   }
 }
 
@@ -100,8 +97,7 @@ const updateProject = async ({
 
     setGlobalState('project', project)
   } catch (error) {
-    console.log(error)
-    throw new Error('No ethereum object.')
+    reportError(error)
   }
 }
 
@@ -114,8 +110,7 @@ const loadProject = async (id) => {
 
     setGlobalState('project', project)
   } catch (error) {
-    console.log(error)
-    throw new Error('No ethereum object.')
+    reportError(error)
   }
 }
 
@@ -130,8 +125,7 @@ const loadProjects = async () => {
     setGlobalState('stats', structureStats(stats))
     setGlobalState('projects', structuredProjects(projects))
   } catch (error) {
-    console.log(error)
-    throw new Error('No ethereum object.')
+    reportError(error)
   }
 }
 
@@ -144,6 +138,7 @@ const structuredProjects = (projects) =>
       description: project.description,
       timestamp: new Date(project.timestamp.toNumber()).getTime(),
       expiresAt: new Date(project.expiresAt.toNumber()).getTime(),
+      date: toDate(project.expiresAt.toNumber() * 1000),
       imageURL: project.imageURL,
       raised: parseInt(project.raised._hex) / 10 ** 18,
       cost: parseInt(project.cost._hex) / 10 ** 18,
@@ -151,11 +146,25 @@ const structuredProjects = (projects) =>
     }))
     .reverse()
 
+const toDate = (timestamp) => {
+  const date = new Date(timestamp)
+  const dd = date.getDate()
+  const mm =
+    date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
+  const yyyy = date.getFullYear()
+  return `${yyyy}-${mm}-${dd}`
+}
+
 const structureStats = (stats) => ({
   totalProjects: stats.totalProjects.toNumber(),
   totalBacking: stats.totalBacking.toNumber(),
   totalDonations: parseInt(stats.totalDonations._hex) / 10 ** 18,
 })
+
+const reportError = (error) => {
+  console.log(error.message)
+  throw new Error('No ethereum object.')
+}
 
 export {
   getEtheriumContract,

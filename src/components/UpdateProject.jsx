@@ -6,7 +6,7 @@ import { updateProject } from '../Genesis'
 const UpdateProject = ({ project }) => {
   const [updateModal] = useGlobalState('updateModal')
   const [title, setTitle] = useState(project.title)
-  const [date, setDate] = useState('')
+  const [date, setDate] = useState(project.date)
   const [description, setDescription] = useState(project.description)
   const [imageURL, setImageURL] = useState(project.imageURL)
 
@@ -20,18 +20,14 @@ const UpdateProject = ({ project }) => {
 
     if (!title || !imageURL || !description || !date) return
     const params = {
-      id,
+      id: project.id,
       title,
       description,
       expiresAt: toTimestamp(date),
       imageURL,
     }
 
-    updateProject(params)
-      .then(() => {
-        setGlobalState('updateModal', 'scale-0')
-      })
-      .catch((error) => console.log(error))
+    updateProject(params).then(() => setGlobalState('updateModal', 'scale-0'))
   }
 
   const closeModal = () => {
