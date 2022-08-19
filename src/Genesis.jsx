@@ -101,6 +101,29 @@ const updateProject = async ({
   }
 }
 
+const backProject = async (id, amount) => {
+  try {
+    if (!ethereum) return alert('Please install Metamask')
+    const connectedAccount = getGlobalState('connectedAccount')
+    const contract = getEtheriumContract()
+    amount = ethers.utils.parseEther(amount)
+
+    await contract.backProject(id, {
+      from: connectedAccount,
+      value: amount._hex,
+    })
+
+    const stats = await contract.stats()
+    let project = await contract.getProject(id)
+    project = structuredProjects([project])[0]
+
+    setGlobalState('project', project)
+    setGlobalState('stats', structureStats(stats))
+  } catch (error) {
+    reportError(error)
+  }
+}
+
 const loadProject = async (id) => {
   try {
     if (!ethereum) return alert('Please install Metamask')
@@ -174,4 +197,5 @@ export {
   updateProject,
   loadProjects,
   loadProject,
+  backProject,
 }

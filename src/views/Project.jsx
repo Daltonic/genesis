@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from 'react'
 import { loadProject } from '../Genesis'
 import UpdateProject from '../components/UpdateProject'
+import BackProject from '../components/BackProject'
 
 const Project = () => {
   const { id } = useParams()
@@ -27,6 +28,7 @@ const Project = () => {
       <div className="my-5"></div>
       <Backers />
       <UpdateProject project={project} />
+      <BackProject project={project} />
     </div>
   ) : null
 }
@@ -95,6 +97,7 @@ const Details = ({ id, project }) => {
               leading-tight uppercase rounded-full shadow-md hover:bg-green-700 hover:shadow-lg
               focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0
               active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+              onClick={() => setGlobalState('backModal', 'scale-100')}
             >
               Back This Project
             </button>
