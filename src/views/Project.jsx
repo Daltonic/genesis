@@ -75,7 +75,8 @@ const Details = ({ id, project }) => {
             <div
               className="bg-green-600 text-xs font-medium
             text-green-100 text-center p-0.5 leading-none
-            rounded-l-full w-10 h-1"
+            rounded-l-full h-1"
+              style={{ width: `${(project.raised / project.cost) * 100}%` }}
             ></div>
           </div>
           <div className="flex justify-between items-center font-bold mt-2">

@@ -166,6 +166,7 @@ const structuredProjects = (projects) =>
       raised: parseInt(project.raised._hex) / 10 ** 18,
       cost: parseInt(project.cost._hex) / 10 ** 18,
       backers: project.backers.toNumber(),
+      status: project.status,
     }))
     .reverse()
 
