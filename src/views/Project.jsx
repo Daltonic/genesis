@@ -18,7 +18,9 @@ const Project = () => {
   const [project] = useGlobalState('project')
 
   useEffect(() => {
-    loadProject(id).then(() => setLoaded(true))
+    loadProject(id).then(() => {
+      setLoaded(true)
+    })
   }, [])
 
   return loaded ? (
@@ -66,8 +68,13 @@ const Details = ({ id, project }) => {
               <small className="text-gray-500 font-bold">
                 {project.backers} Backer{project.backer == 1 ? '' : 's'}
               </small>
-              {/* <small className="text-red-500 font-bold">Reverted</small> */}
-              <small className="text-green-500 font-bold">Accepted</small>
+
+              {project.status == 1 ? (
+                <small className="text-green-500 font-bold">Accepted</small>
+              ) : null}
+              {project.status == 2 ? (
+                <small className="text-red-500 font-bold">Reverted</small>
+              ) : null}
             </div>
           </div>
           <p className="text-sm font-light">{project.description}</p>
@@ -90,31 +97,47 @@ const Details = ({ id, project }) => {
           </div>
 
           <div className="flex justify-start items-center space-x-2 font-bold mt-4 w-full">
-            <button
-              type="button"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="light"
-              className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs 
-              leading-tight uppercase rounded-full shadow-md hover:bg-green-700 hover:shadow-lg
-              focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
-              onClick={() => setGlobalState('backModal', 'scale-100')}
-            >
-              Back This Project
-            </button>
-            {connectedAccount.toLowerCase() == project.owner.toLowerCase() ? (
+            {project.status == 0 ? (
               <button
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className="inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs 
-                leading-tight uppercase rounded-full shadow-md hover:bg-gray-700 hover:shadow-lg
-                focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0
-                active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out"
-                onClick={() => setGlobalState('updateModal', 'scale-100')}
+                className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs 
+                leading-tight uppercase rounded-full shadow-md hover:bg-green-700 hover:shadow-lg
+                focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0
+                active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                onClick={() => setGlobalState('backModal', 'scale-100')}
               >
-                Edit
+                Back This Project
               </button>
+            ) : null}
+
+            {connectedAccount.toLowerCase() == project.owner.toLowerCase() ? (
+              <>
+                <button
+                  type="button"
+                  data-mdb-ripple="true"
+                  data-mdb-ripple-color="light"
+                  className="inline-block px-6 py-2.5 bg-gray-600 text-white font-medium text-xs 
+                  leading-tight uppercase rounded-full shadow-md hover:bg-gray-700 hover:shadow-lg
+                  focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0
+                  active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out"
+                  onClick={() => setGlobalState('updateModal', 'scale-100')}
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  data-mdb-ripple="true"
+                  data-mdb-ripple-color="light"
+                  className="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs 
+                  leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg
+                  focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0
+                  active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                >
+                  Delete
+                </button>
+              </>
             ) : null}
             <button
               type="button"
