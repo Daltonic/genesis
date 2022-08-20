@@ -9,9 +9,9 @@ const Projects = () => {
   return (
     <div className="flex flex-col">
       <div className="flex justify-center items-center flex-wrap">
-        {projects.map((project, i) => (
-          <Project project={project} key={i} />
-        ))}
+        {projects.map((project, i) => 
+          project.status != 3 ? <Project project={project} key={i} /> : null
+        )}
       </div>
 
       <div className="flex justify-center items-center my-5">

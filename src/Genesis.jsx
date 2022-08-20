@@ -124,6 +124,17 @@ const backProject = async (id, amount) => {
   }
 }
 
+const deleteProject = async (id) => {
+  try {
+    if (!ethereum) return alert('Please install Metamask')
+    const contract = getEtheriumContract()
+    await contract.deleteProject(id)
+
+  } catch (error) {
+    reportError(error)
+  }
+}
+
 const loadProject = async (id) => {
   try {
     if (!ethereum) return alert('Please install Metamask')
@@ -133,6 +144,7 @@ const loadProject = async (id) => {
 
     setGlobalState('project', project)
   } catch (error) {
+    alert(JSON.stringify(error.message))
     reportError(error)
   }
 }
@@ -196,6 +208,7 @@ export {
   connectWallet,
   createProject,
   updateProject,
+  deleteProject,
   loadProjects,
   loadProject,
   backProject,

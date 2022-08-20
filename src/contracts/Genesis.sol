@@ -137,7 +137,6 @@ contract Genesis {
         );
 
         projects[id].status = statusEnum.DELETED;
-        projectExist[id] = false;
         performRefund(id);
 
         emit Action (

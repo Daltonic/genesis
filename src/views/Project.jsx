@@ -1,26 +1,28 @@
 import Identicon from 'react-identicons'
+import UpdateProject from '../components/UpdateProject'
+import BackProject from '../components/BackProject'
 import { FaEthereum } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { loadProject } from '../Genesis'
 import {
   daysRemaining,
   setGlobalState,
   truncate,
   useGlobalState,
 } from '../store'
-import { useEffect, useState } from 'react'
-import { loadProject } from '../Genesis'
-import UpdateProject from '../components/UpdateProject'
-import BackProject from '../components/BackProject'
+import DeleteProject from '../components/DeleteProject'
 
 const Project = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [loaded, setLoaded] = useState(false)
   const [project] = useGlobalState('project')
 
   useEffect(() => {
-    loadProject(id).then(() => {
-      setLoaded(true)
-    })
+    loadProject(id)
+      .then(() => setLoaded(true))
+      .catch(() => navigate('/'))
   }, [])
 
   return loaded ? (
@@ -31,6 +33,7 @@ const Project = () => {
       <Backers />
       <UpdateProject project={project} />
       <BackProject project={project} />
+      <DeleteProject project={project} />
     </div>
   ) : null
 }
@@ -134,6 +137,7 @@ const Details = ({ id, project }) => {
                   leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg
                   focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0
                   active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                  onClick={() => setGlobalState('deleteModal', 'scale-100')}
                 >
                   Delete
                 </button>
