@@ -45,96 +45,10 @@ const Chat = () => {
               </div>
               <small className="leading-tight my-2">Message goes here...</small>
             </div>
-            <Identicon
-              string={'Sender'}
-              size={25}
-              className="h-10 w-10 object-contain shadow-md rounded-full mr-3"
-            />
           </div>
         </div>
         <div className="flex flex-row justify-end my-2">
           <div className="flex justify-center items-end space-x-2">
-            <Identicon
-              string={'@you'}
-              size={25}
-              className="h-10 w-10 object-contain shadow-md rounded-full mr-3"
-            />
-            <div
-              className="flex flex-col bg-transparent w-80 p-3 px-5 rounded-t-3xl
-          rounded-br-3xl shadow shadow-green-500"
-            >
-              <div className="flex flex-row justify-start items-center space-x-2">
-                <span>@you</span>
-                <small>6 min ago</small>
-              </div>
-              <small className="leading-tight my-2">Message goes here...</small>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-row justify-start my-2">
-          <div className="flex justify-center items-end space-x-2">
-            <div
-              className="flex flex-col bg-transparent w-80 p-3 px-5 rounded-t-3xl
-          rounded-bl-3xl shadow shadow-gray-500"
-            >
-              <div className="flex flex-row justify-start items-center space-x-2">
-                <span>@sender</span>
-                <small>6 min ago</small>
-              </div>
-              <small className="leading-tight my-2">Message goes here...</small>
-            </div>
-            <Identicon
-              string={'Sender'}
-              size={25}
-              className="h-10 w-10 object-contain shadow-md rounded-full mr-3"
-            />
-          </div>
-        </div>
-        <div className="flex flex-row justify-end my-2">
-          <div className="flex justify-center items-end space-x-2">
-            <Identicon
-              string={'@you'}
-              size={25}
-              className="h-10 w-10 object-contain shadow-md rounded-full mr-3"
-            />
-            <div
-              className="flex flex-col bg-transparent w-80 p-3 px-5 rounded-t-3xl
-          rounded-br-3xl shadow shadow-green-500"
-            >
-              <div className="flex flex-row justify-start items-center space-x-2">
-                <span>@you</span>
-                <small>6 min ago</small>
-              </div>
-              <small className="leading-tight my-2">Message goes here...</small>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-row justify-start my-2">
-          <div className="flex justify-center items-end space-x-2">
-            <div
-              className="flex flex-col bg-transparent w-80 p-3 px-5 rounded-t-3xl
-          rounded-bl-3xl shadow shadow-gray-500"
-            >
-              <div className="flex flex-row justify-start items-center space-x-2">
-                <span>@sender</span>
-                <small>6 min ago</small>
-              </div>
-              <small className="leading-tight my-2">Message goes here...</small>
-            </div>
-            <Identicon
-              string={'Sender'}
-              size={25}
-              className="h-10 w-10 object-contain shadow-md rounded-full mr-3"
-            />
-          </div>
-        </div>
-        <div className="flex flex-row justify-end my-2">
-          <div className="flex justify-center items-end space-x-2">
-            <Identicon
-              string={'@you'}
-              size={25}
-              className="h-10 w-10 object-contain shadow-md rounded-full mr-3"
-            />
             <div
               className="flex flex-col bg-transparent w-80 p-3 px-5 rounded-t-3xl
           rounded-br-3xl shadow shadow-green-500"

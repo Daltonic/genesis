@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { loadProject } from '../Genesis'
 import { useGlobalState } from '../store'
+import ChatAuth from '../components/ChatAuth'
 
 const Project = () => {
   const { id } = useParams()
@@ -23,10 +24,11 @@ const Project = () => {
       <div className="my-5"></div>
       <ProjectDetails id={id} project={project} />
       <div className="my-5"></div>
-      <ProjectBackers backers={backers} />
+      {backers.length > 0 ? <ProjectBackers backers={backers} /> : null}
       <UpdateProject project={project} />
       <BackProject project={project} />
       <DeleteProject project={project} />
+      <ChatAuth />
       <div className="my-5"></div>
     </div>
   ) : null

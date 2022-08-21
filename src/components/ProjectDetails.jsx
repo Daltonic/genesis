@@ -1,7 +1,7 @@
 import Identicon from 'react-identicons'
 import { FaEthereum } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
-import { payoutProject, refundProject } from '../Genesis'
+import { payoutProject } from '../Genesis'
 import {
   daysRemaining,
   setGlobalState,
@@ -12,6 +12,11 @@ import {
 const ProjectDetails = ({ id, project }) => {
   const navigate = useNavigate()
   const [connectedAccount] = useGlobalState('connectedAccount')
+
+  const handleChat = () => {
+    // navigate(`/chats/` + id)
+    setGlobalState('chatModal', 'scale-100')
+  }
 
   return (
     <div className="flex justify-center items-center flex-col">
@@ -87,7 +92,7 @@ const ProjectDetails = ({ id, project }) => {
             </small>
           </div>
 
-          <div className="flex justify-start flex-wrap items-center space-x-2 space-y-2 font-bold mt-4 w-full">
+          <div className="flex justify-start flex-wrap items-center space-x-2 font-bold mt-4 w-full">
             {project.status == 0 ? (
               <button
                 type="button"
@@ -169,7 +174,7 @@ const ProjectDetails = ({ id, project }) => {
                 leading-tight uppercase rounded-full shadow-md hover:bg-orange-700 hover:shadow-lg
                 focus:bg-orange-700 focus:shadow-lg focus:outline-none focus:ring-0
                 active:bg-orange-800 active:shadow-lg transition duration-150 ease-in-out"
-              onClick={() => navigate(`/chats/` + id)}
+              onClick={handleChat}
             >
               Chat
             </button>
