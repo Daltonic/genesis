@@ -178,6 +178,7 @@ const loadProject = async (id) => {
 
     setGlobalState('project', project)
     await getBackers(id)
+    console.log("Project Loaded...")
   } catch (error) {
     alert(JSON.stringify(error.message))
     reportError(error)

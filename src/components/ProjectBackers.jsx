@@ -62,7 +62,7 @@ const ProjectBackers = ({ backers }) => {
                 </td>
                 <td className="text-sm font-light px-6 py-4 whitespace-nowrap">
                   {backer.refunded ? (
-                    <span className="text-green-700 font-bold">Yes</span>
+                    <span className="text-red-700 font-bold">Yes</span>
                   ) : (
                     <span className="text-gray-700 font-bold">No</span>
                   )}

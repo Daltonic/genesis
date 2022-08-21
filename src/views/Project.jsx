@@ -16,10 +16,10 @@ const Project = () => {
 
   useEffect(() => {
     loadProject(id).then(() => setLoaded(true))
-  }, [backers.length])
+  }, [])
 
   return loaded ? (
-    <div className="flex flex-col sm:w-2/3 w-full mx-auto">
+    <div className="flex flex-col lg:w-4/5 w-full mx-auto px-5">
       <div className="my-5"></div>
       <ProjectDetails id={id} project={project} />
       <div className="my-5"></div>
@@ -27,6 +27,7 @@ const Project = () => {
       <UpdateProject project={project} />
       <BackProject project={project} />
       <DeleteProject project={project} />
+      <div className="my-5"></div>
     </div>
   ) : null
 }

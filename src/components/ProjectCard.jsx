@@ -21,18 +21,21 @@ const ProjectCard = ({ project }) => (
           <h5 className="text-gray-900 text-sm font-medium mb-2">
             {project.title}
           </h5>
-          <small className="text-gray-500">
-            {daysRemaining(project.expiresAt)}
-          </small>
         </div>
-        <div className="flex justify-start items-center space-x-2 mb-3">
-          <Identicon
-            className="rounded-full shadow-md"
-            string={project.owner}
-            size={15}
-          />
-          <small className="text-gray-700">
-            {truncate(project.owner, 4, 4, 11)}
+        <div className="flex justify-between items-center mb-3">
+          <div className='flex justify-start items-center space-x-2'>
+            <Identicon
+              className="rounded-full shadow-md"
+              string={project.owner}
+              size={15}
+            />
+            <small className="text-gray-700">
+              {truncate(project.owner, 4, 4, 11)}
+            </small>
+          </div>
+
+          <small className="text-gray-500">
+            {daysRemaining(project.expiresAt)} left
           </small>
         </div>
         <div className="w-full bg-gray-300 rounded-full">

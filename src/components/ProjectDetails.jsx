@@ -22,12 +22,12 @@ const ProjectDetails = ({ id, project }) => {
           alt={project.title}
         />
         <div className="flex-1 sm:py-0 py-4">
-          <div className="flex justify-start space-x-2">
+          <div className="flex flex-col justify-start flex-wrap">
             <h5 className="text-gray-900 text-sm font-medium mb-2">
               {project.title}
             </h5>
             <small className="text-gray-500">
-              {daysRemaining(project.expiresAt)}
+              {daysRemaining(project.expiresAt)} left
             </small>
           </div>
           <div className="flex justify-start items-center space-x-2 mb-3">
@@ -156,21 +156,6 @@ const ProjectDetails = ({ id, project }) => {
                   </button>
                 )
               ) : null
-            ) : null}
-            
-            {project.status == 3 ? (
-              <button
-                type="button"
-                data-mdb-ripple="true"
-                data-mdb-ripple-color="light"
-                className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs 
-              leading-tight uppercase rounded-full shadow-md hover:bg-green-700 hover:shadow-lg
-              focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
-                onClick={() => refundProject(project.id)}
-              >
-                Get Refund
-              </button>
             ) : null}
 
             <button

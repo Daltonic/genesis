@@ -138,6 +138,7 @@ contract Genesis {
         );
 
         projects[id].status = statusEnum.DELETED;
+        performRefund(id);
 
         emit Action (
             id,
@@ -183,30 +184,16 @@ contract Genesis {
 
     function performRefund(uint id) internal {
         for(uint i = 0; i < backersOf[id].length; i++) {
-            if(msg.sender == backersOf[id][i].owner && !backersOf[id][i].refunded) {
-                address _owner = backersOf[id][i].owner;
-                uint _contribution = backersOf[id][i].contribution;
-                
-                backersOf[id][i].refunded = true;
-                backersOf[id][i].timestamp = block.timestamp;
-                payTo(_owner, _contribution);
+            address _owner = backersOf[id][i].owner;
+            uint _contribution = backersOf[id][i].contribution;
+            
+            backersOf[id][i].refunded = true;
+            backersOf[id][i].timestamp = block.timestamp;
+            payTo(_owner, _contribution);
 
-                stats.totalBacking -= 1;
-                stats.totalDonations -= _contribution;
-            }
+            stats.totalBacking -= 1;
+            stats.totalDonations -= _contribution;
         }
-    }
-
-    function requestRefund(uint id) public returns (bool) {
-        require(
-            projects[id].status != statusEnum.REVERTED ||
-            projects[id].status != statusEnum.DELETED,
-            "Project not marked as revert or delete"
-        );
-        
-        projects[id].status = statusEnum.REVERTED;
-        performRefund(id);
-        return true;
     }
 
     function backProject(uint id) public payable returns (bool) {
@@ -238,14 +225,28 @@ contract Genesis {
         if(projects[id].raised >= projects[id].cost) {
             projects[id].status = statusEnum.APPROVED;
             balance += projects[id].raised;
+            performPayout(id);
             return true;
         }
 
         if(block.timestamp >= projects[id].expiresAt) {
             projects[id].status = statusEnum.REVERTED;
+            performRefund(id);
             return true;
         }
 
+        return true;
+    }
+
+    function requestRefund(uint id) public returns (bool) {
+        require(
+            projects[id].status != statusEnum.REVERTED ||
+            projects[id].status != statusEnum.DELETED,
+            "Project not marked as revert or delete"
+        );
+        
+        projects[id].status = statusEnum.REVERTED;
+        performRefund(id);
         return true;
     }
 
