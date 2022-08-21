@@ -27,7 +27,10 @@ const ProjectDetails = ({ id, project }) => {
               {project.title}
             </h5>
             <small className="text-gray-500">
-              {daysRemaining(project.expiresAt)} left
+              {new Date().getTime() > Number(project.expiresAt + '000')
+                ? 'Expired'
+                : daysRemaining(project.expiresAt)}{' '}
+              left
             </small>
           </div>
           <div className="flex justify-start items-center space-x-2 mb-3">
@@ -84,7 +87,7 @@ const ProjectDetails = ({ id, project }) => {
             </small>
           </div>
 
-          <div className="flex justify-start flex-wrap items-center space-x-2 font-bold mt-4 w-full">
+          <div className="flex justify-start flex-wrap items-center space-x-2 space-y-2 font-bold mt-4 w-full">
             {project.status == 0 ? (
               <button
                 type="button"

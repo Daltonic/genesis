@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import ProjectCard from "./ProjectCard"
 
 const Projects = ({projects}) => {
-  const [end, setEnd] = useState(1)
-  const [count] = useState(1)
+  const [end, setEnd] = useState(4)
+  const [count] = useState(4)
 
   const [collection, setCollection] = useState([])
 
