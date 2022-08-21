@@ -1,11 +1,9 @@
 import { FaTimes } from 'react-icons/fa'
 import { setGlobalState, useGlobalState } from '../store'
 import { deleteProject } from '../Genesis'
-import { useNavigate } from 'react-router-dom'
 
 const DeleteProject = ({ project }) => {
   const [deleteModal] = useGlobalState('deleteModal')
-  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -13,7 +11,6 @@ const DeleteProject = ({ project }) => {
     deleteProject(project.id).then(() => {
       setGlobalState('deleteModal', 'scale-0')
       console.log('Project Deleted!')
-      navigate('/')
     })
   }
 

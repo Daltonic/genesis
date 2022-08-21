@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { setGlobalState, useGlobalState } from '../store'
-import { createProject } from '../Genesis'
+import { createProject, loadProjects } from '../Genesis'
 
 const CreateProject = () => {
   const [modal] = useGlobalState('modal')
@@ -33,6 +33,7 @@ const CreateProject = () => {
         setGlobalState('modal', 'scale-0')
         console.log('Project Created!')
         resetForm()
+        loadProjects()
       })
       .catch((error) => console.log(error))
   }
@@ -76,7 +77,7 @@ const CreateProject = () => {
                 className="h-full w-full object-cover cursor-pointer"
                 src={
                   imageURL ||
-                  'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80'
+                  'https://daltonic.github.io/assets/images/hero.jpg'
                 }
               />
             </div>

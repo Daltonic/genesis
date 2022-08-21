@@ -14,7 +14,7 @@ const BackProject = ({project}) => {
 
     backProject(project.id, amount)
       .then(() => {
-        setGlobalState('backModal', 'scale-0')
+        closeModal()
         console.log('Project Backed!')
         setAmount('')
       })

@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react'
 import { loadProjects } from '../Genesis'
+import { useGlobalState } from '../store'
 import Hero from '../components/Hero'
 import Projects from '../components/Projects'
 
 const Home = () => {
   const [loaded, setLoaded] = useState(false)
+  const [projects] = useGlobalState('projects')
 
   useEffect(() => {
-    loadProjects().then(() => {
-      console.log('Projects Loaded!')
-      setLoaded(true)
-    })
+    loadProjects().then(() => setLoaded(true))
   }, [])
 
   return loaded ? (
     <>
       <Hero />
-      <Projects />
+      <Projects projects={projects} />
     </>
   ) : null
 }

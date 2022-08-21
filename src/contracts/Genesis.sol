@@ -31,6 +31,7 @@ contract Genesis {
         address owner;
         uint contribution;
         uint timestamp;
+        bool refunded;
     }
 
     struct projectStruct {
@@ -70,7 +71,7 @@ contract Genesis {
         string memory imageURL,
         uint cost,
         uint expiresAt
-    ) public returns (bool) {
+        ) public returns (bool) {
         require(bytes(title).length > 0, "Title cannot be empty");
         require(bytes(description).length > 0, "Description cannot be empty");
         require(bytes(imageURL).length > 0, "ImageURL cannot be empty");
@@ -105,7 +106,7 @@ contract Genesis {
         string memory description,
         string memory imageURL,
         uint expiresAt
-    ) public returns (bool) {
+        ) public returns (bool) {
         require(msg.sender == projects[id].owner, "Unauthorized Entity");
         require(projectExist[id], "Project not found");
         require(bytes(title).length > 0, "Title cannot be empty");
@@ -137,7 +138,6 @@ contract Genesis {
         );
 
         projects[id].status = statusEnum.DELETED;
-        performRefund(id);
 
         emit Action (
             id,
@@ -183,13 +183,14 @@ contract Genesis {
 
     function performRefund(uint id) internal {
         for(uint i = 0; i < backersOf[id].length; i++) {
-            if(msg.sender == backersOf[id][i].owner) {
+            if(msg.sender == backersOf[id][i].owner && !backersOf[id][i].refunded) {
                 address _owner = backersOf[id][i].owner;
                 uint _contribution = backersOf[id][i].contribution;
+                
+                backersOf[id][i].refunded = true;
+                backersOf[id][i].timestamp = block.timestamp;
                 payTo(_owner, _contribution);
 
-                delete backersOf[id][i];
-                stats.totalProjects -= 1;
                 stats.totalBacking -= 1;
                 stats.totalDonations -= _contribution;
             }
@@ -197,7 +198,6 @@ contract Genesis {
     }
 
     function requestRefund(uint id) public returns (bool) {
-        require(block.timestamp >= projects[id].expiresAt, "Project not expired");
         require(
             projects[id].status != statusEnum.REVERTED ||
             projects[id].status != statusEnum.DELETED,
@@ -223,7 +223,8 @@ contract Genesis {
             backerStruct(
                 msg.sender,
                 msg.value,
-                block.timestamp
+                block.timestamp,
+                false
             )
         );
 
@@ -234,14 +235,14 @@ contract Genesis {
             block.timestamp
         );
 
-        if(block.timestamp >= projects[id].expiresAt) {
-            projects[id].status = statusEnum.REVERTED;
-            return true;
-        }
-
         if(projects[id].raised >= projects[id].cost) {
             projects[id].status = statusEnum.APPROVED;
             balance += projects[id].raised;
+            return true;
+        }
+
+        if(block.timestamp >= projects[id].expiresAt) {
+            projects[id].status = statusEnum.REVERTED;
             return true;
         }
 
@@ -254,7 +255,6 @@ contract Genesis {
 
     function getProject(uint id) public view returns (projectStruct memory) {
         require(projectExist[id], "Project not found");
-        require(projects[id].status != statusEnum.DELETED, "Project already deleted");
 
         return projects[id];
     }

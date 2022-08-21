@@ -38,7 +38,7 @@ const isWallectConnected = async () => {
     if (accounts.length) {
       setGlobalState('connectedAccount', accounts[0])
     } else {
-      alert("Please connect wallet.")
+      alert('Please connect wallet.')
       console.log('No accounts found.')
     }
   } catch (error) {
@@ -70,11 +70,7 @@ const createProject = async ({
     cost = ethers.utils.parseEther(cost)
     await contract.createProject(title, description, imageURL, cost, expiresAt)
 
-    const projects = await contract.getProjects()
-    const stats = await contract.stats()
-
-    setGlobalState('stats', structureStats(stats))
-    setGlobalState('projects', structuredProjects(projects))
+    await loadProjects()
   } catch (error) {
     reportError(error)
   }
@@ -93,10 +89,7 @@ const updateProject = async ({
     const contract = getEtheriumContract()
     await contract.updateProject(id, title, description, imageURL, expiresAt)
 
-    let project = await contract.getProject(id)
-    project = structuredProjects([project])[0]
-
-    setGlobalState('project', project)
+    await loadProject(id)
   } catch (error) {
     reportError(error)
   }
@@ -114,12 +107,51 @@ const backProject = async (id, amount) => {
       value: amount._hex,
     })
 
-    const stats = await contract.stats()
-    let project = await contract.getProject(id)
-    project = structuredProjects([project])[0]
+    await loadProject(id)
+  } catch (error) {
+    reportError(error)
+  }
+}
 
-    setGlobalState('project', project)
-    setGlobalState('stats', structureStats(stats))
+const refundProject = async (id) => {
+  try {
+    if (!ethereum) return alert('Please install Metamask')
+    const connectedAccount = getGlobalState('connectedAccount')
+    const contract = getEtheriumContract()
+
+    await contract.requestRefund(id, {
+      from: connectedAccount,
+    })
+
+    await loadProject(id)
+  } catch (error) {
+    reportError(error)
+  }
+}
+
+const payoutProject = async (id) => {
+  try {
+    if (!ethereum) return alert('Please install Metamask')
+    const connectedAccount = getGlobalState('connectedAccount')
+    const contract = getEtheriumContract()
+
+    await contract.payOutProject(id, {
+      from: connectedAccount,
+    })
+
+    await loadProject(id)
+  } catch (error) {
+    reportError(error)
+  }
+}
+
+const getBackers = async (id) => {
+  try {
+    if (!ethereum) return alert('Please install Metamask')
+    const contract = getEtheriumContract()
+    let backers = await contract.getBackers(id)
+
+    setGlobalState('backers', structuredBackers(backers))
   } catch (error) {
     reportError(error)
   }
@@ -131,6 +163,7 @@ const deleteProject = async (id) => {
     const contract = getEtheriumContract()
     await contract.deleteProject(id)
 
+    await loadProject(id)
   } catch (error) {
     reportError(error)
   }
@@ -144,6 +177,7 @@ const loadProject = async (id) => {
     project = structuredProjects([project])[0]
 
     setGlobalState('project', project)
+    await getBackers(id)
   } catch (error) {
     alert(JSON.stringify(error.message))
     reportError(error)
@@ -165,6 +199,16 @@ const loadProjects = async () => {
   }
 }
 
+const structuredBackers = (backers) =>
+  backers
+    .map((backer) => ({
+      owner: backer.owner,
+      refunded: backer.refunded,
+      timestamp: new Date(backer.timestamp.toNumber() * 1000).toJSON(),
+      contribution: parseInt(backer.contribution._hex) / 10 ** 18,
+    }))
+    .reverse()
+
 const structuredProjects = (projects) =>
   projects
     .map((project) => ({
@@ -185,7 +229,7 @@ const structuredProjects = (projects) =>
 
 const toDate = (timestamp) => {
   const date = new Date(timestamp)
-  const dd = date.getDate()
+  const dd = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
   const mm =
     date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
   const yyyy = date.getFullYear()
@@ -213,4 +257,6 @@ export {
   loadProjects,
   loadProject,
   backProject,
+  payoutProject,
+  refundProject,
 }
