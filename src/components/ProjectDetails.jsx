@@ -12,10 +12,10 @@ import {
 const ProjectDetails = ({ project }) => {
   const navigate = useNavigate()
   const [connectedAccount] = useGlobalState('connectedAccount')
-  const [currentUser] = useGlobalState('currentUser')
+  const [group] = useGlobalState('group')
 
   const handleChat = () => {
-    if (!!currentUser) {
+    if (group?.hasJoined) {
       navigate(`/chats/` + project.id)
     } else {
       setGlobalState('chatModal', 'scale-100')

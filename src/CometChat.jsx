@@ -45,8 +45,8 @@ const signInWithCometChat = async () => {
 const logOutWithCometChat = async () => {
   await CometChat.logout()
     .then(() => {
-        setGlobalState('currentUser', null)
-        console.log('Logged Out Successfully')
+      setGlobalState('currentUser', null)
+      console.log('Logged Out Successfully')
     })
     .catch((error) => console.log(error))
 }
@@ -63,7 +63,7 @@ const createNewGroup = async (GUID, groupName) => {
   const group = new CometChat.Group(GUID, groupName, groupType, password)
 
   await CometChat.createGroup(group)
-    .then((group) => setGlobalState('group', group))
+    .then((group) => getGroup(group.guid))
     .catch((error) => console.log(error))
 }
 
@@ -77,8 +77,8 @@ const joinGroup = async (GUID) => {
   const groupType = CometChat.GROUP_TYPE.PUBLIC
   const password = ''
 
-  CometChat.joinGroup(GUID, groupType, password)
-    .then((group) => setGlobalState('group', group))
+  await CometChat.joinGroup(GUID, groupType, password)
+    .then((group) => getGroup(group.guid))
     .catch((error) => console.log(error))
 }
 
@@ -105,8 +105,8 @@ const sendMessage = async (receiverID, messageText) => {
 
   await CometChat.sendMessage(textMessage)
     .then((message) => {
-        const messages = getGlobalState("messages")
-        setGlobalState('messages', messages.push(message))
+      const messages = getGlobalState('messages')
+      setGlobalState('messages', messages.push(message))
     })
     .catch((error) => console.log(error))
 }
