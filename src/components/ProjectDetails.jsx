@@ -9,13 +9,17 @@ import {
   useGlobalState,
 } from '../store'
 
-const ProjectDetails = ({ id, project }) => {
+const ProjectDetails = ({ project }) => {
   const navigate = useNavigate()
   const [connectedAccount] = useGlobalState('connectedAccount')
+  const [currentUser] = useGlobalState('currentUser')
 
   const handleChat = () => {
-    // navigate(`/chats/` + id)
-    setGlobalState('chatModal', 'scale-100')
+    if (!!currentUser) {
+      navigate(`/chats/` + project.id)
+    } else {
+      setGlobalState('chatModal', 'scale-100')
+    }
   }
 
   return (

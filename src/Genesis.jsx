@@ -2,6 +2,7 @@ import abi from './abis/src/contracts/Genesis.sol/Genesis.json'
 import address from './abis/contractAddress.json'
 import { getGlobalState, setGlobalState } from './store'
 import { ethers } from 'ethers'
+import { logOutWithCometChat } from './CometChat'
 
 const { ethereum } = window
 const contractAddress = address.address
@@ -32,6 +33,7 @@ const isWallectConnected = async () => {
 
     window.ethereum.on('accountsChanged', async () => {
       setGlobalState('connectedAccount', accounts[0])
+      await logOutWithCometChat()
       await isWallectConnected()
     })
 
