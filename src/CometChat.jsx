@@ -89,10 +89,10 @@ const getMessages = async (UID) => {
     .setLimit(limit)
     .build()
 
-  await messagesRequest
+  return await messagesRequest
     .fetchPrevious()
-    .then((messages) => setGlobalState('messages', messages))
-    .catch((error) => console.log(error))
+    .then((messages) => messages)
+    .catch((error) => error)
 }
 
 const sendMessage = async (receiverID, messageText) => {
@@ -103,12 +103,9 @@ const sendMessage = async (receiverID, messageText) => {
     receiverType
   )
 
-  await CometChat.sendMessage(textMessage)
-    .then((message) => {
-      const messages = getGlobalState('messages')
-      setGlobalState('messages', messages.push(message))
-    })
-    .catch((error) => console.log(error))
+  return await CometChat.sendMessage(textMessage)
+    .then((message) => message)
+    .catch((error) => error)
 }
 
 export {
@@ -122,4 +119,5 @@ export {
   createNewGroup,
   getGroup,
   joinGroup,
+  CometChat
 }

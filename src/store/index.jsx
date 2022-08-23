@@ -8,7 +8,6 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
   backModal: 'scale-0',
   chatModal: 'scale-0',
   connectedAccount: '',
-  messages: [],
   backers: [],
   projects: [],
   project: null,
