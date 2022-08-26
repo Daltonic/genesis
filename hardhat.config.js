@@ -11,7 +11,7 @@ module.exports = {
     },
     rinkeby: {
       url: process.env.ENDPOINT_URL,
-      chainId: 4,
+      // chainId: 4,
       accounts: [process.env.DEPLOYER_KEY]
     }
   },

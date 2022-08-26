@@ -72,7 +72,8 @@ const createProject = async ({
     cost = ethers.utils.parseEther(cost)
     await contract.createProject(title, description, imageURL, cost, expiresAt)
 
-    await loadProjects()
+    await loadProjects() // The blockchain is too slow for this...
+    window.location.reload() // That's why we used this...
   } catch (error) {
     reportError(error)
   }
@@ -91,7 +92,8 @@ const updateProject = async ({
     const contract = getEtheriumContract()
     await contract.updateProject(id, title, description, imageURL, expiresAt)
 
-    await loadProject(id)
+    await loadProjects() // The blockchain is too slow for this...
+    window.location.reload() // That's why we used this...
   } catch (error) {
     reportError(error)
   }
@@ -109,7 +111,8 @@ const backProject = async (id, amount) => {
       value: amount._hex,
     })
 
-    await loadProject(id)
+    await loadProjects() // The blockchain is too slow for this...
+    window.location.reload() // That's why we used this...
   } catch (error) {
     reportError(error)
   }
@@ -125,7 +128,8 @@ const refundProject = async (id) => {
       from: connectedAccount,
     })
 
-    await loadProject(id)
+    await loadProjects() // The blockchain is too slow for this...
+    window.location.reload() // That's why we used this...
   } catch (error) {
     reportError(error)
   }
@@ -141,7 +145,8 @@ const payoutProject = async (id) => {
       from: connectedAccount,
     })
 
-    await loadProject(id)
+    await loadProjects() // The blockchain is too slow for this...
+    window.location.reload() // That's why we used this...
   } catch (error) {
     reportError(error)
   }
@@ -165,7 +170,8 @@ const deleteProject = async (id) => {
     const contract = getEtheriumContract()
     await contract.deleteProject(id)
 
-    await loadProject(id)
+    await loadProjects() // The blockchain is too slow for this...
+    window.location.reload() // That's why we used this...
   } catch (error) {
     reportError(error)
   }
