@@ -44,12 +44,6 @@ To run the demo follow these steps:
     DEPLOYER_KEY=<YOUR_PRIVATE_KEY>
     ```
 2. Create a CometChat project, copy and paste your key in the spaces below.
-3. Update the `.env` file with the following details.
-    ```sh
-    REACT_APP_COMET_CHAT_REGION=<REGION>
-    REACT_APP_COMET_CHAT_APP_ID=<APP_ID>
-    REACT_APP_COMET_CHAT_AUTH_KEY=<AUTH_KEY>
-    ```
 3. Run the app using `yarn start`
 <br/>
 
