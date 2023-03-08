@@ -6,6 +6,7 @@ import { ethers } from 'ethers'
 const { ethereum } = window
 const contractAddress = address.address
 const contractAbi = abi.abi
+let tx
 
 const connectWallet = async () => {
   try {
@@ -69,7 +70,9 @@ const createProject = async ({
 
     const contract = await getEtheriumContract()
     cost = ethers.utils.parseEther(cost)
-    await contract.createProject(title, description, imageURL, cost, expiresAt)
+    tx = await contract.createProject(title, description, imageURL, cost, expiresAt)
+    await tx.wait()
+    await loadProjects()
   } catch (error) {
     reportError(error)
   }
@@ -86,7 +89,9 @@ const updateProject = async ({
     if (!ethereum) return alert('Please install Metamask')
 
     const contract = await getEtheriumContract()
-    await contract.updateProject(id, title, description, imageURL, expiresAt)
+    tx = await contract.updateProject(id, title, description, imageURL, expiresAt)
+    await tx.wait()
+    await loadProject(id)
   } catch (error) {
     reportError(error)
   }
@@ -137,10 +142,13 @@ const backProject = async (id, amount) => {
     const contract = await getEtheriumContract()
     amount = ethers.utils.parseEther(amount)
 
-    await contract.backProject(id, {
+    tx = await contract.backProject(id, {
       from: connectedAccount,
       value: amount._hex,
     })
+
+    await tx.wait()
+    await getBackers(id)
   } catch (error) {
     reportError(error)
   }
@@ -164,9 +172,12 @@ const payoutProject = async (id) => {
     const connectedAccount = getGlobalState('connectedAccount')
     const contract = await getEtheriumContract()
 
-    await contract.payOutProject(id, {
+    tx = await contract.payOutProject(id, {
       from: connectedAccount,
     })
+
+    await tx.wait()
+    await getBackers(id)
   } catch (error) {
     reportError(error)
   }
